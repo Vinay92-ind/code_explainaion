@@ -1,6 +1,6 @@
 "use client";
 
-import {useState} from 'react';
+import {useState, useRef} from 'react';
 import {explainCode} from '@/ai/flows/explain-code';
 import {suggestImprovements} from '@/ai/flows/suggest-improvements';
 import {Textarea} from '@/components/ui/textarea';
@@ -28,6 +28,7 @@ export function ExplainCode() {
   const [explanation, setExplanation] = useState('');
   const [improvements, setImprovements] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleExplainCode = async () => {
     setIsLoading(true);
@@ -71,6 +72,24 @@ export function ExplainCode() {
     }
   };
 
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (!file) {
+      return;
+    }
+
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      const content = e.target?.result as string;
+      setCode(content);
+    };
+    reader.readAsText(file);
+  };
+
+  const handleAttachFile = () => {
+    fileInputRef.current?.click();
+  };
+
   return (
     <div className="flex w-full flex-col p-4 md:flex-row">
       {/* Code Input Section */}
@@ -96,21 +115,36 @@ export function ExplainCode() {
               value={code}
               onChange={e => setCode(e.target.value)}
             />
-            <div className="flex justify-end space-x-2">
+            <input
+              type="file"
+              accept=".js,.py,.txt"
+              style={{ display: 'none' }}
+              onChange={handleFileChange}
+              ref={fileInputRef}
+            />
+            <div className="flex justify-between space-x-2">
               <Button
                 variant="outline"
-                disabled={isLoading}
-                onClick={handleExplainCode}
+                onClick={handleAttachFile}
               >
-                {isLoading ? 'Explaining...' : 'Explain Code'}
+                Attach File
               </Button>
-              <Button
-                variant="outline"
-                disabled={isLoading}
-                onClick={handleSuggestImprovements}
-              >
-                {isLoading ? 'Suggesting...' : 'Suggest Improvements'}
-              </Button>
+              <div>
+                <Button
+                  variant="outline"
+                  disabled={isLoading}
+                  onClick={handleExplainCode}
+                >
+                  {isLoading ? 'Explaining...' : 'Explain Code'}
+                </Button>
+                <Button
+                  variant="outline"
+                  disabled={isLoading}
+                  onClick={handleSuggestImprovements}
+                >
+                  {isLoading ? 'Suggesting...' : 'Suggest Improvements'}
+                </Button>
+              </div>
             </div>
           </CardContent>
         </Card>
