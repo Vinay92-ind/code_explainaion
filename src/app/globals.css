@@ -41,6 +41,12 @@ body {
     --sidebar-accent-foreground: 240 5.9% 10%;
     --sidebar-border: 220 13% 91%;
     --sidebar-ring: 217.2 91.2% 59.8%;
+
+    --background: 0 0% 96.1%; /* Light gray (#F5F5F5) */
+    --foreground: 0 0% 20%; /* Dark gray (#333333) */
+    --accent: 180 100% 25%; /* Teal (#008080) */
+    --accent-foreground: 0 0% 100%;
+
   }
   .dark {
     --background: 0 0% 3.9%;
@@ -86,3 +92,4 @@ body {
     @apply bg-background text-foreground;
   }
 }
+
