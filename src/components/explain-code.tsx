@@ -118,13 +118,13 @@ export function ExplainCode() {
 
       {/* Explanation Display Section */}
       <div className="w-full md:w-1/2">
-        <Tabs defaultActiveKey="explanation" className="w-full">
+        <Tabs defaultValue="explanation" className="w-full">
           <TabsList>
-            <TabsTrigger key="explanation">Explanation</TabsTrigger>
-            <TabsTrigger key="improvements">Improvements</TabsTrigger>
+            <TabsTrigger value="explanation">Explanation</TabsTrigger>
+            <TabsTrigger value="improvements">Improvements</TabsTrigger>
           </TabsList>
           <Separator className="my-2"/>
-          <TabsContent key="explanation" className="ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2">
+          <TabsContent value="explanation" className="ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2">
             <Card>
               <CardHeader>
                 <CardTitle>Code Explanation</CardTitle>
@@ -137,7 +137,7 @@ export function ExplainCode() {
               </CardContent>
             </Card>
           </TabsContent>
-          <TabsContent key="improvements" className="ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2">
+          <TabsContent value="improvements" className="ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2">
             <Card>
               <CardHeader>
                 <CardTitle>Suggested Improvements</CardTitle>
