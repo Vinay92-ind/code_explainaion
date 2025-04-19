@@ -25,7 +25,7 @@ console.log(sum); // Output: 8
 export function ExplainCode() {
   const [language, setLanguage] = useState<'JavaScript' | 'Python'>('JavaScript');
   const [code, setCode] = useState(placeholderCode);
-  const [explanation, setExplanation] = useState('');
+  const [explanations, setExplanations] = useState<string[]>([]);
   const [improvements, setImprovements] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -34,7 +34,7 @@ export function ExplainCode() {
     setIsLoading(true);
     try {
       const result = await explainCode({code, language});
-      setExplanation(result.explanation);
+      setExplanations(result.explanations);
       toast({
         title: "Code Explained!",
         description: "Explanation generated successfully.",
@@ -117,7 +117,7 @@ export function ExplainCode() {
               </SelectContent>
             </Select>
             <Textarea
-              className="font-mono"
+              className="font-mono text-black"
               placeholder="Paste your code here..."
               value={code}
               onChange={e => setCode(e.target.value)}
@@ -166,17 +166,33 @@ export function ExplainCode() {
           </TabsList>
           <Separator className="my-2"/>
           <TabsContent value="explanation" className="ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2">
-            <Card>
-              <CardHeader>
-                <CardTitle>Code Explanation</CardTitle>
-                <CardDescription>Here is the explanation of the code:</CardDescription>
-              </CardHeader>
-              <CardContent className="font-mono">
-                <ScrollArea className="h-[400px] w-full rounded-md border">
-                  <div className="p-4 whitespace-pre-line">{explanation || 'No explanation available.'}</div>
-                </ScrollArea>
-              </CardContent>
-            </Card>
+            {explanations.length > 0 ? (
+              explanations.map((explanation, index) => (
+                <Card key={index} className="mb-4">
+                  <CardHeader>
+                    <CardTitle>Function Explanation {index + 1}</CardTitle>
+                    <CardDescription>Explanation of the code block:</CardDescription>
+                  </CardHeader>
+                  <CardContent className="font-mono">
+                    <ScrollArea className="h-[200px] w-full rounded-md border">
+                      <div className="p-4 whitespace-pre-line text-black">{explanation}</div>
+                    </ScrollArea>
+                  </CardContent>
+                </Card>
+              ))
+            ) : (
+              <Card>
+                <CardHeader>
+                  <CardTitle>Code Explanation</CardTitle>
+                  <CardDescription>No explanation available.</CardDescription>
+                </CardHeader>
+                <CardContent className="font-mono">
+                  <ScrollArea className="h-[400px] w-full rounded-md border">
+                    <div className="p-4 whitespace-pre-line text-black">No explanation available.</div>
+                  </ScrollArea>
+                </CardContent>
+              </Card>
+            )}
           </TabsContent>
           <TabsContent value="improvements" className="ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2">
             <Card>
@@ -186,7 +202,7 @@ export function ExplainCode() {
               </CardHeader>
               <CardContent className="font-mono">
                 <ScrollArea className="h-[400px] w-full rounded-md border">
-                  <div className="p-4 whitespace-pre-line">{improvements || 'No improvements available.'}</div>
+                  <div className="p-4 whitespace-pre-line text-black">{improvements || 'No improvements available.'}</div>
                 </ScrollArea>
               </CardContent>
             </Card>
