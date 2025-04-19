@@ -91,7 +91,7 @@ export function ExplainCode() {
               </SelectContent>
             </Select>
             <Textarea
-              className="font-mono text-secondary"
+              className="font-mono text-black"
               placeholder="Paste your code here..."
               value={code}
               onChange={e => setCode(e.target.value)}
@@ -130,7 +130,7 @@ export function ExplainCode() {
                 <CardTitle>Code Explanation</CardTitle>
                 <CardDescription>Here is the explanation of the code:</CardDescription>
               </CardHeader>
-              <CardContent className="font-mono text-secondary">
+              <CardContent className="font-mono text-black">
                 <ScrollArea className="h-[400px] w-full rounded-md border">
                   <div className="p-4 whitespace-pre-line">{explanation || 'No explanation available.'}</div>
                 </ScrollArea>
@@ -143,7 +143,7 @@ export function ExplainCode() {
                 <CardTitle>Suggested Improvements</CardTitle>
                 <CardDescription>Here are the suggested improvements for the code:</CardDescription>
               </CardHeader>
-              <CardContent className="font-mono text-secondary">
+              <CardContent className="font-mono text-black">
                 <ScrollArea className="h-[400px] w-full rounded-md border">
                   <div className="p-4 whitespace-pre-line">{improvements || 'No improvements available.'}</div>
                 </ScrollArea>
